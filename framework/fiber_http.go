@@ -6,13 +6,17 @@ import (
 )
 
 type httpFiberCtx struct {
-	h *fiber.Ctx
+	ctx *fiber.Ctx
 }
 
 func NewHttpFiber(h *fiber.Ctx) core.IHttpCtx {
 	return &httpFiberCtx{h}
 }
 
-func (c *httpFiberCtx) Get(key string) string {
-	return c.h.Params(key)
+func (h *httpFiberCtx) Get(key string) string {
+	return h.ctx.Params(key)
+}
+
+func (h *httpFiberCtx) ShouldBind(v interface{}) error {
+	return h.ctx.BodyParser(v)
 }
