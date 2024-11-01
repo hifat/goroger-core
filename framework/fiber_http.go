@@ -13,7 +13,7 @@ func NewHttpFiber(h *fiber.Ctx) core.IHttpCtx {
 	return &httpFiberCtx{h}
 }
 
-func (h *httpFiberCtx) Get(key string) string {
+func (h *httpFiberCtx) Param(key string) string {
 	return h.ctx.Params(key)
 }
 

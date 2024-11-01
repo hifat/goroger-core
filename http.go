@@ -11,7 +11,7 @@ type IHttpEngine interface {
 }
 
 type IHttpCtx interface {
-	Get(key string) string
+	Param(key string) string
 	ShouldBind(v interface{}) error
 }
 
