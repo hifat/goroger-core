@@ -14,7 +14,7 @@ func NewHttpFiberEngine(engine *fiber.App) core.IHttpEngine {
 }
 
 func (e *httpEngine) Use(handlers ...func(core.IHttpCtx)) core.IHttpEngine {
-	fiberHandlers := make([]fiber.Handler, len(handlers))
+	fiberHandlers := make([]interface{}, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
 			handler(NewHttpFiber(ctx))
@@ -22,7 +22,8 @@ func (e *httpEngine) Use(handlers ...func(core.IHttpCtx)) core.IHttpEngine {
 		}
 	}
 
-	e.engine.Use(fiberHandlers)
+	e.engine.Use(fiberHandlers...)
+
 	return e
 }
 
@@ -35,7 +36,9 @@ func (e *httpEngine) Get(path string, handlers ...func(core.IHttpCtx)) core.IHtt
 		}
 	}
 
-	return e.engine.Get(path, fiberHandlers...)
+	e.engine.Get(path, fiberHandlers...)
+
+	return e
 }
 
 func (e *httpEngine) Post(path string, handlers ...func(core.IHttpCtx)) core.IHttpRouter {
@@ -47,7 +50,9 @@ func (e *httpEngine) Post(path string, handlers ...func(core.IHttpCtx)) core.IHt
 		}
 	}
 
-	return e.engine.Post(path, fiberHandlers...)
+	e.engine.Post(path, fiberHandlers...)
+
+	return e
 }
 
 func (e *httpEngine) Put(path string, handlers ...func(core.IHttpCtx)) core.IHttpRouter {
@@ -59,7 +64,9 @@ func (e *httpEngine) Put(path string, handlers ...func(core.IHttpCtx)) core.IHtt
 		}
 	}
 
-	return e.engine.Put(path, fiberHandlers...)
+	e.engine.Put(path, fiberHandlers...)
+
+	return e
 }
 
 func (e *httpEngine) Patch(path string, handlers ...func(core.IHttpCtx)) core.IHttpRouter {
@@ -71,7 +78,9 @@ func (e *httpEngine) Patch(path string, handlers ...func(core.IHttpCtx)) core.IH
 		}
 	}
 
-	return e.engine.Patch(path, fiberHandlers...)
+	e.engine.Patch(path, fiberHandlers...)
+
+	return e
 }
 
 func (e *httpEngine) Delete(path string, handlers ...func(core.IHttpCtx)) core.IHttpRouter {
@@ -83,7 +92,9 @@ func (e *httpEngine) Delete(path string, handlers ...func(core.IHttpCtx)) core.I
 		}
 	}
 
-	return e.engine.Delete(path, fiberHandlers...)
+	e.engine.Delete(path, fiberHandlers...)
+
+	return e
 }
 
 func (e *httpEngine) Listener(port string) error {
