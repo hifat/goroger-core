@@ -7,14 +7,14 @@ type IHttpEngine interface {
 
 type IHttpCtx interface {
 	Param(key string) string
-	ShouldBind(v any) error
+	BodyParser(v any) error
 	SendString(message string)
 	JSON(status int, v any) error
 	Abort(status int, message string)
 	Set(key string, value any)
 	Get(key string) any
 	MustGet(key string) (value any, exists bool)
-	ShouldBindQuery(v any) error
+	QueryParser(v any) error
 }
 
 type IHttpRouter interface {

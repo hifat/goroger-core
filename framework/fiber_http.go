@@ -17,7 +17,7 @@ func (h *httpFiberCtx) Param(key string) string {
 	return h.ctx.Params(key)
 }
 
-func (h *httpFiberCtx) ShouldBind(v interface{}) error {
+func (h *httpFiberCtx) BodyParser(v interface{}) error {
 	return h.ctx.BodyParser(v)
 }
 
@@ -45,6 +45,6 @@ func (h *httpFiberCtx) MustGet(key string) (interface{}, bool) {
 	return h.ctx.Locals(key), true
 }
 
-func (h *httpFiberCtx) ShouldBindQuery(v interface{}) error {
+func (h *httpFiberCtx) QueryParser(v interface{}) error {
 	return h.ctx.QueryParser(v)
 }
