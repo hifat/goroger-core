@@ -14,6 +14,7 @@ type IHttpCtx interface {
 	Set(key string, value any)
 	Get(key string) any
 	MustGet(key string) (value any, exists bool)
+	ShouldBindQuery(v any) error
 }
 
 type IHttpRouter interface {

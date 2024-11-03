@@ -44,3 +44,7 @@ func (h *httpFiberCtx) Get(key string) interface{} {
 func (h *httpFiberCtx) MustGet(key string) (interface{}, bool) {
 	return h.ctx.Locals(key), true
 }
+
+func (h *httpFiberCtx) ShouldBindQuery(v interface{}) error {
+	return h.ctx.QueryParser(v)
+}
