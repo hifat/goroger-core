@@ -9,12 +9,14 @@ type IHttpCtx interface {
 	Param(key string) string
 	BodyParser(v any) error
 	SendString(message string)
-	JSON(status int, v any) error
+	JSON(status int, v any)
 	Abort(status int, message string)
+	AbortWithJSON(status int, v any)
 	Set(key string, value any)
 	Get(key string) any
 	MustGet(key string) (value any, exists bool)
 	QueryParser(v any) error
+	Next()
 }
 
 type IHttpRouter interface {

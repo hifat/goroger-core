@@ -2,6 +2,7 @@ package framework
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	core "github.com/hifat/goroger-core"
 )
 
@@ -21,12 +22,20 @@ func (h *httpFiberCtx) BodyParser(v interface{}) error {
 	return h.ctx.BodyParser(v)
 }
 
-func (h *httpFiberCtx) JSON(status int, v interface{}) error {
-	return h.ctx.Status(status).JSON(v)
+func (h *httpFiberCtx) JSON(status int, v interface{}) {
+	if err := h.ctx.Status(status).JSON(v); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (h *httpFiberCtx) Abort(status int, message string) {
 	h.ctx.Status(status).SendString(message)
+}
+
+func (h *httpFiberCtx) AbortWithJSON(status int, v interface{}) {
+	if err := h.ctx.Status(status).JSON(v); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (h *httpFiberCtx) SendString(message string) {
@@ -47,4 +56,10 @@ func (h *httpFiberCtx) MustGet(key string) (interface{}, bool) {
 
 func (h *httpFiberCtx) QueryParser(v interface{}) error {
 	return h.ctx.QueryParser(v)
+}
+
+func (h *httpFiberCtx) Next() {
+	if err := h.ctx.Next(); err != nil {
+		log.Fatal(err)
+	}
 }
