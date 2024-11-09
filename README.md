@@ -1,0 +1,3 @@
+# Goroger Core
+
+Dependency inject
