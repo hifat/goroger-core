@@ -9,7 +9,7 @@ type httpEngine struct {
 	engine *fiber.App
 }
 
-func NewHttpFiberEngine(engine *fiber.App) core.IHttpEngine {
+func NewFiberEngineCtx(engine *fiber.App) core.IHttpEngine {
 	return &httpEngine{engine}
 }
 
@@ -17,7 +17,7 @@ func (e *httpEngine) Use(handlers ...func(core.IHttpCtx)) core.IHttpEngine {
 	fiberHandlers := make([]interface{}, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
-			handler(NewHttpFiber(ctx))
+			handler(NewFiberCtx(ctx))
 			return nil
 		}
 	}
@@ -31,7 +31,7 @@ func (e *httpEngine) Get(path string, handlers ...func(core.IHttpCtx)) core.IHtt
 	fiberHandlers := make([]fiber.Handler, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
-			handler(NewHttpFiber(ctx))
+			handler(NewFiberCtx(ctx))
 			return nil
 		}
 	}
@@ -45,7 +45,7 @@ func (e *httpEngine) Post(path string, handlers ...func(core.IHttpCtx)) core.IHt
 	fiberHandlers := make([]fiber.Handler, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
-			handler(NewHttpFiber(ctx))
+			handler(NewFiberCtx(ctx))
 			return nil
 		}
 	}
@@ -59,7 +59,7 @@ func (e *httpEngine) Put(path string, handlers ...func(core.IHttpCtx)) core.IHtt
 	fiberHandlers := make([]fiber.Handler, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
-			handler(NewHttpFiber(ctx))
+			handler(NewFiberCtx(ctx))
 			return nil
 		}
 	}
@@ -73,7 +73,7 @@ func (e *httpEngine) Patch(path string, handlers ...func(core.IHttpCtx)) core.IH
 	fiberHandlers := make([]fiber.Handler, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
-			handler(NewHttpFiber(ctx))
+			handler(NewFiberCtx(ctx))
 			return nil
 		}
 	}
@@ -87,7 +87,7 @@ func (e *httpEngine) Delete(path string, handlers ...func(core.IHttpCtx)) core.I
 	fiberHandlers := make([]fiber.Handler, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
-			handler(NewHttpFiber(ctx))
+			handler(NewFiberCtx(ctx))
 			return nil
 		}
 	}
