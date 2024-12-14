@@ -41,7 +41,9 @@ func (h *fiberCtx) AbortWithJSON(status int, v interface{}) {
 }
 
 func (h *fiberCtx) SendString(message string) {
-	h.ctx.SendString(message)
+	if err := h.ctx.SendString(message); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (h *fiberCtx) Set(key string, value interface{}) {
