@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions: # Add permissions
+      contents: read
+      pull-requests: read
     timeout-minutes: 10
     
     steps:
@@ -26,7 +29,12 @@ jobs:
     - name: Run tests
       run: go test -v ./...
 
+    - name: Clear module cache # Add cache clearing
+      run: go clean -modcache
+
     - name: Run linter
       uses: golangci/golangci-lint-action@v3
       with:
         version: latest
+        args: --timeout=5m
+        skip-cache: true # Skip cache to avoid permission issues
