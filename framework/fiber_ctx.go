@@ -29,7 +29,9 @@ func (h *fiberCtx) JSON(status int, v interface{}) {
 }
 
 func (h *fiberCtx) Abort(status int, message string) {
-	h.ctx.Status(status).SendString(message)
+	if err := h.ctx.Status(status).SendString(message); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (h *fiberCtx) AbortWithJSON(status int, v interface{}) {
