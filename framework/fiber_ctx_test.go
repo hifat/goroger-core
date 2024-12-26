@@ -99,7 +99,7 @@ func TestFiberCtx_QueryParser(t *testing.T) {
 		var query TestStruct
 		err := ctx.QueryParser(&query)
 		assert.NoError(t, err)
-		assert.Equal(t, "go", query.Name)
+		assert.Equal(t, "test", query.Name)
 		assert.Equal(t, 25, query.Age)
 		return nil
 	})
