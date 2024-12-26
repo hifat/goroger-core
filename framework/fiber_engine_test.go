@@ -79,5 +79,7 @@ func TestHttpEngine_Listener(t *testing.T) {
 	}()
 
 	// Give the server time to start
-	app.ShutdownWithTimeout(1)
+	if err := app.ShutdownWithTimeout(1); err != nil {
+		t.Fatal(err)
+	}
 }
