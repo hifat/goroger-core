@@ -1,3 +1,3 @@
 # Goroger Core
 
-Dependency inject
+Dependency inject fo Go
