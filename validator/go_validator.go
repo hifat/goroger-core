@@ -20,6 +20,8 @@
 package validator
 
 import (
+	"log"
+
 	"github.com/go-playground/validator/v10"
 )
 
@@ -36,9 +38,12 @@ func NewGoValidator() IValidator {
 	// Register custom tag name
 	v.SetTagName("rule")
 	// Register custom validation rule
-	v.RegisterValidation("important", validator.Func(func(fl validator.FieldLevel) bool {
+	err := v.RegisterValidation("important", validator.Func(func(fl validator.FieldLevel) bool {
 		return fl.Field().Len() > 0
 	}))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return &goValidator{
 		validate: v,
