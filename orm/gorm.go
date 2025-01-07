@@ -12,7 +12,7 @@ type gormOrm struct {
 	core.DBOrm
 }
 
-func NewGorm(db *gorm.DB) core.IOrm {
+func NewGormOrm(db *gorm.DB) core.IOrm {
 	return &gormOrm{db: db}
 }
 

@@ -30,15 +30,15 @@ func setupTestDB(t *testing.T) (*gorm.DB, sqlmock.Sqlmock) {
 	return db, mock
 }
 
-func TestNewGorm(t *testing.T) {
+func TestNewGormOrm(t *testing.T) {
 	db, _ := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 	assert.NotNil(t, orm)
 }
 
 func TestGormOrm_Create(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	model := &TestModel{Name: "test"}
 	mock.ExpectBegin()
@@ -54,7 +54,7 @@ func TestGormOrm_Create(t *testing.T) {
 
 func TestGormOrm_First(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	model := &TestModel{}
 	mock.ExpectQuery("SELECT \\* FROM `test_models`").
@@ -70,7 +70,7 @@ func TestGormOrm_First(t *testing.T) {
 
 func TestGormOrm_Transaction(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	mock.ExpectBegin()
 	tx, err := orm.Begin()
@@ -84,7 +84,7 @@ func TestGormOrm_Transaction(t *testing.T) {
 
 func TestGormOrm_WithContext(t *testing.T) {
 	db, _ := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	ctx := context.Background()
 	ctxOrm := orm.WithContext(ctx)
@@ -93,7 +93,7 @@ func TestGormOrm_WithContext(t *testing.T) {
 
 func TestGormOrm_Where(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	model := &TestModel{}
 	mock.ExpectQuery("SELECT \\* FROM `test_models` WHERE name = ?").
@@ -109,7 +109,7 @@ func TestGormOrm_Where(t *testing.T) {
 
 func TestGormOrm_Save(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	model := &TestModel{ID: 1, Name: "updated"}
 	mock.ExpectBegin()
@@ -125,7 +125,7 @@ func TestGormOrm_Save(t *testing.T) {
 
 func TestGormOrm_Update(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	mock.ExpectBegin()
 	mock.ExpectExec("UPDATE `test_models`").
@@ -140,7 +140,7 @@ func TestGormOrm_Update(t *testing.T) {
 
 func TestGormOrm_Delete(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	mock.ExpectBegin()
 	mock.ExpectExec("DELETE FROM `test_models`").
@@ -155,7 +155,7 @@ func TestGormOrm_Delete(t *testing.T) {
 
 func TestGormOrm_Joins(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	model := &TestModel{}
 	mock.ExpectQuery("SELECT .* FROM `test_models` JOIN other_table").
@@ -169,7 +169,7 @@ func TestGormOrm_Joins(t *testing.T) {
 
 func TestGormOrm_InnerJoins(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	model := &TestModel{}
 	mock.ExpectQuery("SELECT .* FROM `test_models` INNER JOIN other_table").
@@ -183,7 +183,7 @@ func TestGormOrm_InnerJoins(t *testing.T) {
 
 func TestGormOrm_Raw(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	var result TestModel
 	mock.ExpectQuery("SELECT \\* FROM test_models WHERE id = \\?").
@@ -199,7 +199,7 @@ func TestGormOrm_Raw(t *testing.T) {
 
 func TestGormOrm_Find(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	var results []TestModel
 	mock.ExpectQuery("SELECT \\* FROM `test_models`").
@@ -215,7 +215,7 @@ func TestGormOrm_Find(t *testing.T) {
 
 func TestGormOrm_Take(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	model := &TestModel{}
 	mock.ExpectQuery("SELECT \\* FROM `test_models`").
@@ -228,7 +228,7 @@ func TestGormOrm_Take(t *testing.T) {
 
 func TestGormOrm_Scan(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	var result struct {
 		Name  string
@@ -245,7 +245,7 @@ func TestGormOrm_Scan(t *testing.T) {
 
 func TestGormOrm_Model(t *testing.T) {
 	db, _ := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	result := orm.Model(&TestModel{})
 	assert.NotNil(t, result)
@@ -253,7 +253,7 @@ func TestGormOrm_Model(t *testing.T) {
 
 func TestGormOrm_Table(t *testing.T) {
 	db, _ := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	result := orm.Table("test_models")
 	assert.NotNil(t, result)
@@ -261,7 +261,7 @@ func TestGormOrm_Table(t *testing.T) {
 
 func TestGormOrm_Debug(t *testing.T) {
 	db, _ := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	result := orm.Debug()
 	assert.NotNil(t, result)
@@ -269,7 +269,7 @@ func TestGormOrm_Debug(t *testing.T) {
 
 func TestGormOrm_Rollback(t *testing.T) {
 	db, mock := setupTestDB(t)
-	orm := NewGorm(db)
+	orm := NewGormOrm(db)
 
 	mock.ExpectBegin()
 	tx, err := orm.Begin()
