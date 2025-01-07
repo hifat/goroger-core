@@ -70,6 +70,12 @@ func (o *gormOrm) Delete(value any, conds ...any) error {
 	return o.db.Delete(value, conds...).Error
 }
 
+func (o *gormOrm) Select(query any, args ...any) core.IOrm {
+	return &gormOrm{
+		db: o.db.Select(query, args...),
+	}
+}
+
 func (o *gormOrm) Where(query any, args ...any) core.IOrm {
 	return &gormOrm{
 		db: o.db.Where(query, args...),

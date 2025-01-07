@@ -91,6 +91,21 @@ func TestGormOrm_WithContext(t *testing.T) {
 	assert.NotNil(t, ctxOrm)
 }
 
+func TestGormOrm_Select(t *testing.T) {
+	db, mock := setupTestDB(t)
+	orm := NewGormOrm(db)
+
+	model := &TestModel{}
+	mock.ExpectQuery("SELECT .+ FROM `test_models`").
+		WillReturnRows(sqlmock.NewRows([]string{"id", "name"}).
+			AddRow(1, "test"))
+
+	err := orm.Select("id", "name").Find(model)
+	assert.NoError(t, err)
+	assert.Equal(t, "test", model.Name)
+	assert.NoError(t, mock.ExpectationsWereMet())
+}
+
 func TestGormOrm_Where(t *testing.T) {
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)

@@ -22,6 +22,7 @@ type IOrm interface {
 	Save(value any) error
 	Update(column string, value any) error
 	Delete(query any, args ...any) error
+	Select(query any, args ...any) IOrm
 	Where(query any, args ...any) IOrm
 	Joins(query string, args ...any) IOrm
 	InnerJoins(query string, args ...any) IOrm
