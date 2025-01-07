@@ -109,7 +109,6 @@ func (o *gormOrm) Take(dest any, conds ...any) core.IOrm {
 }
 
 func (o *gormOrm) Scan(dest any) core.IOrm {
-	o.db.Debug()
 	return &gormOrm{
 		db: o.db.Scan(dest),
 	}
