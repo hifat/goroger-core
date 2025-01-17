@@ -28,6 +28,8 @@ type IOrm interface {
 	InnerJoins(query string, args ...any) IOrm
 	Raw(sql string, values ...any) IOrm
 
+	Not(query interface{}, args ...any) IOrm
+
 	Take(dest any, conds ...any) IOrm
 	First(dest any, conds ...any) error
 	Find(dest any, conds ...any) error

@@ -119,3 +119,9 @@ func (o *gormOrm) Scan(dest any) core.IOrm {
 		db: o.db.Scan(dest),
 	}
 }
+
+func (o *gormOrm) Not(query interface{}, args ...any) core.IOrm {
+	return &gormOrm{
+		db: o.db.Not(query, args),
+	}
+}
