@@ -301,12 +301,12 @@ func TestGormOrm_Not(t *testing.T) {
 	orm := NewGormOrm(db)
 
 	model := &TestModel{}
-	mock.ExpectQuery("SELECT \\* FROM `test_models` WHERE NOT id = ?").
-		WithArgs(1).
+	mock.ExpectQuery("SELECT \\* FROM `test_models` WHERE NOT name = ?").
+		WithArgs("test").
 		WillReturnRows(sqlmock.NewRows([]string{"id", "name"}).
 			AddRow(2, "test"))
 
-	err := orm.Not("id = ?", 1).Find(model)
+	err := orm.Not("name = ?", "test").Find(model)
 	assert.NoError(t, err)
 	assert.Equal(t, "test", model.Name)
 	assert.NoError(t, mock.ExpectationsWereMet())
