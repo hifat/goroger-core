@@ -295,3 +295,19 @@ func TestGormOrm_Rollback(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NoError(t, mock.ExpectationsWereMet())
 }
+
+func TestGormOrm_Not(t *testing.T) {
+	db, mock := setupTestDB(t)
+	orm := NewGormOrm(db)
+
+	model := &TestModel{}
+	mock.ExpectQuery("SELECT \\* FROM `test_models` WHERE NOT id = ?").
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "name"}).
+			AddRow(2, "test"))
+
+	err := orm.Not("id = ?", 1).Find(model)
+	assert.NoError(t, err)
+	assert.Equal(t, "test", model.Name)
+	assert.NoError(t, mock.ExpectationsWereMet())
+}
