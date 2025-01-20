@@ -21,6 +21,8 @@ type TestStruct struct {
 }
 
 func TestFiberCtx_Param(t *testing.T) {
+	t.Parallel()
+
 	app := setupTestApp()
 	app.Get("/:id", func(c *fiber.Ctx) error {
 		ctx := NewFiberCtx(c)
@@ -34,6 +36,8 @@ func TestFiberCtx_Param(t *testing.T) {
 }
 
 func TestFiberCtx_BodyParser(t *testing.T) {
+	t.Parallel()
+
 	app := setupTestApp()
 	app.Post("/", func(c *fiber.Ctx) error {
 		ctx := NewFiberCtx(c)
@@ -53,6 +57,8 @@ func TestFiberCtx_BodyParser(t *testing.T) {
 }
 
 func TestFiberCtx_JSON(t *testing.T) {
+	t.Parallel()
+
 	app := setupTestApp()
 	app.Get("/", func(c *fiber.Ctx) error {
 		ctx := NewFiberCtx(c)
@@ -70,9 +76,12 @@ func TestFiberCtx_JSON(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "test", result.Name)
 	assert.Equal(t, 25, result.Age)
+
 }
 
 func TestFiberCtx_Locals(t *testing.T) {
+	t.Parallel()
+
 	app := setupTestApp()
 	app.Get("/", func(c *fiber.Ctx) error {
 		ctx := NewFiberCtx(c)
@@ -93,6 +102,8 @@ func TestFiberCtx_Locals(t *testing.T) {
 }
 
 func TestFiberCtx_QueryParser(t *testing.T) {
+	t.Parallel()
+
 	app := setupTestApp()
 	app.Get("/", func(c *fiber.Ctx) error {
 		ctx := NewFiberCtx(c)

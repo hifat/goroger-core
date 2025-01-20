@@ -10,12 +10,16 @@ import (
 )
 
 func TestNewFiberEngineCtx(t *testing.T) {
+	t.Parallel()
+
 	app := fiber.New()
 	engine := NewFiberEngineCtx(app)
 	assert.NotNil(t, engine)
 }
 
 func TestHttpEngine_Use(t *testing.T) {
+	t.Parallel()
+
 	app := fiber.New()
 	engine := NewFiberEngineCtx(app)
 
@@ -34,6 +38,8 @@ func TestHttpEngine_Use(t *testing.T) {
 }
 
 func TestHttpEngine_Routes(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name     string
 		method   string
@@ -49,6 +55,8 @@ func TestHttpEngine_Routes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			app := fiber.New()
 			engine := NewFiberEngineCtx(app)
 
@@ -69,6 +77,8 @@ func TestHttpEngine_Routes(t *testing.T) {
 }
 
 func TestHttpEngine_Listener(t *testing.T) {
+	t.Parallel()
+
 	app := fiber.New()
 	engine := NewFiberEngineCtx(app)
 

@@ -31,12 +31,16 @@ func setupTestDB(t *testing.T) (*gorm.DB, sqlmock.Sqlmock) {
 }
 
 func TestNewGormOrm(t *testing.T) {
+	t.Parallel()
+
 	db, _ := setupTestDB(t)
 	orm := NewGormOrm(db)
 	assert.NotNil(t, orm)
 }
 
 func TestGormOrm_Create(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -53,6 +57,8 @@ func TestGormOrm_Create(t *testing.T) {
 }
 
 func TestGormOrm_First(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -69,6 +75,8 @@ func TestGormOrm_First(t *testing.T) {
 }
 
 func TestGormOrm_Transaction(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -83,6 +91,8 @@ func TestGormOrm_Transaction(t *testing.T) {
 }
 
 func TestGormOrm_WithContext(t *testing.T) {
+	t.Parallel()
+
 	db, _ := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -92,6 +102,8 @@ func TestGormOrm_WithContext(t *testing.T) {
 }
 
 func TestGormOrm_Select(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -107,6 +119,8 @@ func TestGormOrm_Select(t *testing.T) {
 }
 
 func TestGormOrm_Where(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -123,6 +137,8 @@ func TestGormOrm_Where(t *testing.T) {
 }
 
 func TestGormOrm_Save(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -139,6 +155,8 @@ func TestGormOrm_Save(t *testing.T) {
 }
 
 func TestGormOrm_Update(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -154,6 +172,8 @@ func TestGormOrm_Update(t *testing.T) {
 }
 
 func TestGormOrm_Delete(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -169,6 +189,8 @@ func TestGormOrm_Delete(t *testing.T) {
 }
 
 func TestGormOrm_Joins(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -183,6 +205,8 @@ func TestGormOrm_Joins(t *testing.T) {
 }
 
 func TestGormOrm_InnerJoins(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -197,6 +221,8 @@ func TestGormOrm_InnerJoins(t *testing.T) {
 }
 
 func TestGormOrm_Raw(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -213,6 +239,8 @@ func TestGormOrm_Raw(t *testing.T) {
 }
 
 func TestGormOrm_Find(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -229,6 +257,8 @@ func TestGormOrm_Find(t *testing.T) {
 }
 
 func TestGormOrm_Take(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -242,6 +272,8 @@ func TestGormOrm_Take(t *testing.T) {
 }
 
 func TestGormOrm_Scan(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -259,6 +291,8 @@ func TestGormOrm_Scan(t *testing.T) {
 }
 
 func TestGormOrm_Model(t *testing.T) {
+	t.Parallel()
+
 	db, _ := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -267,6 +301,8 @@ func TestGormOrm_Model(t *testing.T) {
 }
 
 func TestGormOrm_Table(t *testing.T) {
+	t.Parallel()
+
 	db, _ := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -275,6 +311,8 @@ func TestGormOrm_Table(t *testing.T) {
 }
 
 func TestGormOrm_Debug(t *testing.T) {
+	t.Parallel()
+
 	db, _ := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -283,6 +321,8 @@ func TestGormOrm_Debug(t *testing.T) {
 }
 
 func TestGormOrm_Rollback(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
@@ -297,6 +337,8 @@ func TestGormOrm_Rollback(t *testing.T) {
 }
 
 func TestGormOrm_Not(t *testing.T) {
+	t.Parallel()
+
 	db, mock := setupTestDB(t)
 	orm := NewGormOrm(db)
 
