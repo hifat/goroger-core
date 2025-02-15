@@ -1,4 +1,4 @@
-package core
+package helper
 
 import (
 	core "github.com/hifat/goroger-core"
