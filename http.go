@@ -21,6 +21,7 @@ type IHttpCtx interface {
 
 type IHttpRouter interface {
 	Use(handlers ...func(IHttpCtx)) IHttpEngine
+	Group(prefix string) IHttpRouter
 	Get(path string, handlers ...func(IHttpCtx)) IHttpRouter
 	Post(path string, handlers ...func(IHttpCtx)) IHttpRouter
 	Put(path string, handlers ...func(IHttpCtx)) IHttpRouter

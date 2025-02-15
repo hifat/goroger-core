@@ -27,6 +27,12 @@ func (e *httpEngine) Use(handlers ...func(core.IHttpCtx)) core.IHttpEngine {
 	return e
 }
 
+func (e *httpEngine) Group(prefix string) core.IHttpRouter {
+	e.engine.Group(prefix)
+
+	return e
+}
+
 func (e *httpEngine) Get(path string, handlers ...func(core.IHttpCtx)) core.IHttpRouter {
 	fiberHandlers := make([]fiber.Handler, len(handlers))
 	for i, handler := range handlers {
