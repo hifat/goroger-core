@@ -26,8 +26,15 @@ func toFiberHandler(handlers []func(core.IHttpCtx)) []fiber.Handler {
 }
 
 func (e *httpEngine) Use(handlers ...func(core.IHttpCtx)) core.IHttpEngine {
-	fiberHandlers := toFiberHandler(handlers)
-	e.engine.Use(fiberHandlers)
+	fiberHandlers := make([]interface{}, len(handlers))
+	for i, handler := range handlers {
+		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
+			handler(NewFiberCtx(ctx))
+			return nil
+		}
+	}
+
+	e.engine.Use(fiberHandlers...)
 
 	return e
 }
@@ -96,10 +103,16 @@ func (e *fiberGroup) Group(prefix string, handlers ...func(core.IHttpCtx)) core.
 }
 
 func (e *fiberGroup) Use(handlers ...func(core.IHttpCtx)) core.IHttpEngine {
-	fiberHandlers := toFiberHandler(handlers)
+	fiberHandlers := make([]interface{}, len(handlers))
+	for i, handler := range handlers {
+		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
+			handler(NewFiberCtx(ctx))
+			return nil
+		}
+	}
 
 	return &fiberGroup{
-		engine: e.engine.Use(fiberHandlers),
+		engine: e.engine.Use(fiberHandlers...),
 	}
 }
 
