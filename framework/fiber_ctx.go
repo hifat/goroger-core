@@ -1,6 +1,8 @@
 package framework
 
 import (
+	"net/http"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	core "github.com/hifat/goroger-core"
@@ -64,6 +66,7 @@ func (h *fiberCtx) QueryParser(v interface{}) error {
 
 func (h *fiberCtx) Next() {
 	if err := h.ctx.Next(); err != nil {
-		log.Fatal(err)
+		log.Error(err.Error())
+		h.ctx.Response().SetStatusCode(http.StatusInternalServerError)
 	}
 }
