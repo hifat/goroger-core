@@ -6,6 +6,8 @@ type IHttpEngine interface {
 }
 
 type IHttpCtx interface {
+	Method() string
+	SetHeader(key string, val string)
 	Param(key string) string
 	BodyParser(v any) error
 	SendString(message string)

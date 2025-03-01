@@ -16,6 +16,14 @@ func NewFiberCtx(h *fiber.Ctx) core.IHttpCtx {
 	return &fiberCtx{h}
 }
 
+func (h *fiberCtx) Method() string {
+	return h.ctx.Method()
+}
+
+func (h *fiberCtx) SetHeader(key string, val string) {
+	h.ctx.Set(key, val)
+}
+
 func (h *fiberCtx) Param(key string) string {
 	return h.ctx.Params(key)
 }
