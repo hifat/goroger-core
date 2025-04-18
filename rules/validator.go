@@ -11,8 +11,20 @@ import (
 	en_translations "github.com/go-playground/validator/v10/translations/en"
 )
 
+type ValidateErrs map[string]string
+
+func (v ValidateErrs) Error() string {
+	if len(v) > 0 {
+		for _, value := range v {
+			return value // Returns first item encountered
+		}
+	}
+
+	return "validate error but not found attribute"
+}
+
 type Validator interface {
-	Validate(v any) (*map[string]string, error)
+	Validate(v any) error
 }
 
 type pgValidator struct {
@@ -47,17 +59,17 @@ func (p *pgValidator) Struct(v any) error {
 	return p.v.Struct(v)
 }
 
-func (p *pgValidator) Validate(v any) (*map[string]string, error) {
+func (p *pgValidator) Validate(v any) error {
 	err := p.v.Struct(v)
 	validateErrors, ok := err.(validator.ValidationErrors)
 	if !ok {
-		return nil, err
+		return err
 	}
 
-	objErr := make(map[string]string)
+	objErr := make(ValidateErrs)
 	for _, e := range validateErrors {
 		objErr[e.Field()] = e.Translate(p.trans)
 	}
 
-	return &objErr, nil
+	return objErr
 }
