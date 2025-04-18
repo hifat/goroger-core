@@ -1,6 +1,7 @@
 package framework
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -77,4 +78,8 @@ func (h *fiberCtx) Next() {
 		log.Error(err.Error())
 		h.ctx.Response().SetStatusCode(http.StatusInternalServerError)
 	}
+}
+
+func (h *fiberCtx) Context() context.Context {
+	return h.ctx.Context()
 }
