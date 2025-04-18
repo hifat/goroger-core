@@ -1,11 +1,14 @@
 package core
 
+import "context"
+
 type IHttpEngine interface {
 	IHttpRouter
 	Listener(port string) error
 }
 
 type IHttpCtx interface {
+	Context() context.Context
 	Method() string
 	SetHeader(key string, val string)
 	Param(key string) string
