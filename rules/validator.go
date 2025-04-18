@@ -12,7 +12,7 @@ import (
 )
 
 type Validator interface {
-	Validate(err error) (*map[string]string, error)
+	Validate(v any) (*map[string]string, error)
 }
 
 type pgValidator struct {
@@ -43,13 +43,19 @@ func Register() (*validator.Validate, error) {
 	return v, en_translations.RegisterDefaultTranslations(v, trans)
 }
 
-func (p *pgValidator) Validate(err error) (*map[string]string, error) {
-	if _, ok := err.(validator.ValidationErrors); !ok {
+func (p *pgValidator) Struct(v any) error {
+	return p.v.Struct(v)
+}
+
+func (p *pgValidator) Validate(v any) (*map[string]string, error) {
+	err := p.v.Struct(v)
+	validateErrors, ok := err.(validator.ValidationErrors)
+	if !ok {
 		return nil, err
 	}
 
 	objErr := make(map[string]string)
-	for _, e := range err.(validator.ValidationErrors) {
+	for _, e := range validateErrors {
 		objErr[e.Field()] = e.Translate(p.trans)
 	}
 
