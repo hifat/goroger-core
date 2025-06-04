@@ -1,6 +1,7 @@
 package framework
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"testing"
 
@@ -35,6 +36,26 @@ func TestHttpEngine_Use(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.True(t, middlewareCalled)
+}
+
+func TestHttpEngine_Group(t *testing.T) {
+	t.Parallel()
+
+	app := fiber.New()
+	engine := NewFiberEngineCtx(app)
+
+	prefix := "/prefix"
+	handlerCalled := false
+	group := engine.Group(prefix)
+	group.Get("", func(ic core.IHttpCtx) {
+		handlerCalled = true
+	})
+
+	req := httptest.NewRequest(http.MethodGet, prefix, nil)
+	_, err := app.Test(req)
+
+	assert.NoError(t, err)
+	assert.True(t, handlerCalled)
 }
 
 func TestHttpEngine_Routes(t *testing.T) {

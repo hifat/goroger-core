@@ -26,7 +26,7 @@ func toFiberHandler(handlers []func(core.IHttpCtx)) []fiber.Handler {
 }
 
 func (e *httpEngine) Use(handlers ...func(core.IHttpCtx)) core.IHttpEngine {
-	fiberHandlers := make([]interface{}, len(handlers))
+	fiberHandlers := make([]any, len(handlers))
 	for i, handler := range handlers {
 		fiberHandlers[i] = func(ctx *fiber.Ctx) error {
 			handler(NewFiberCtx(ctx))
